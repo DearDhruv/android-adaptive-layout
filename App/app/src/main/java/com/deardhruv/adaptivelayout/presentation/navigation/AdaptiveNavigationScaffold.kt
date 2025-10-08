@@ -27,7 +27,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -51,9 +51,11 @@ fun AdaptiveNavigationScaffold(
     productViewModel: ProductViewModel,
     modifier: Modifier = Modifier
 ) {
-    var currentDestination by remember { mutableStateOf(AppDestination.HOME) }
+    // Enhanced state management with Saver
+    var navigationState by rememberSaveable(stateSaver = NavigationState.Saver) {
+        mutableStateOf(NavigationState())
+    }
 
-    // Determine navigation type based on window size
     val showNavigationRail = windowInfo.widthSizeClass == WindowWidthSizeClass.MEDIUM ||
             windowInfo.widthSizeClass == WindowWidthSizeClass.EXPANDED
     val showBottomBar = windowInfo.widthSizeClass == WindowWidthSizeClass.COMPACT
@@ -61,9 +63,7 @@ fun AdaptiveNavigationScaffold(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Text("Adaptive Layout Demo")
-                },
+                title = { Text("Adaptive Layout Demo") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -84,8 +84,12 @@ fun AdaptiveNavigationScaffold(
                                 )
                             },
                             label = { Text(destination.label) },
-                            selected = currentDestination == destination,
-                            onClick = { currentDestination = destination }
+                            selected = navigationState.currentDestination == destination,
+                            onClick = {
+                                navigationState = navigationState.copy(
+                                    currentDestination = destination
+                                )
+                            }
                         )
                     }
                 }
@@ -98,7 +102,6 @@ fun AdaptiveNavigationScaffold(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // Navigation Rail for medium and expanded screens
             if (showNavigationRail) {
                 NavigationRail(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
@@ -113,16 +116,19 @@ fun AdaptiveNavigationScaffold(
                                 )
                             },
                             label = { Text(destination.label) },
-                            selected = currentDestination == destination,
-                            onClick = { currentDestination = destination }
+                            selected = navigationState.currentDestination == destination,
+                            onClick = {
+                                navigationState = navigationState.copy(
+                                    currentDestination = destination
+                                )
+                            }
                         )
                     }
                 }
             }
 
-            // Main content area
             Box(modifier = Modifier.fillMaxSize()) {
-                when (currentDestination) {
+                when (navigationState.currentDestination) {
                     AppDestination.HOME -> {
                         HomeScreen(windowInfo = windowInfo)
                     }

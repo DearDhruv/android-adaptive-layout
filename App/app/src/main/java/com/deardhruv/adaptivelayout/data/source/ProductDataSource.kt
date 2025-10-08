@@ -30,10 +30,10 @@ class ProductDataSource {
                         "including phones, tablets, foldables, and desktop windows. " +
                         "The product features high quality materials and excellent craftsmanship.",
                 price = (index + 1) * 10.99,
+                imageUrl = "https://picsum.photos/seed/${index+30}/400/300",
                 // imageUrl = "https://via.placeholder.com/400x300.png/282828/FFFFFF?text=Product+${index + 1}",
                 // imageUrl = "https://loremflickr.com/400/300/${listOf("electronics", "apparel", "home", "books", "sports")[index % 5]}?lock=$index",
-                // imageUrl = "https://picsum.photos/seed/$index/400/300",
-                imageUrl = "https://placehold.co/600x400?text=Product%0A${index + 1}",
+                // imageUrl = "https://placehold.co/600x400?text=Product%0A${index + 1}",
                 category = listOf("Electronics", "Clothing", "Home", "Books", "Sports")[index % 5],
                 rating = 3.5f + (index % 3) * 0.5f,
                 inStock = index % 7 != 0
