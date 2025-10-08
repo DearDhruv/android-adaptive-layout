@@ -149,6 +149,8 @@ dependencies {
     implementation(libs.android.material)
     implementation(libs.androidx.material)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
     // implementation(libs.materialKolor)
     // runtimeOnly(libs.kotlinx.metadata.jvm)
 
@@ -176,6 +178,10 @@ dependencies {
     implementation(libs.accompanist.permissions)
 
 
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.svg)
+
     // room
     // ksp(libs.androidx.room.compiler)
     // implementation(libs.androidx.room.runtime)
@@ -199,8 +205,6 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.retrofit)
-
-    // navigation
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
