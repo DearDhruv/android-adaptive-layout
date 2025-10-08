@@ -11,17 +11,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.deardhruv.adaptivelayout.ui.theme.AdaptiveLayoutTheme
 import com.deardhruv.adaptivelayout.data.repository.ProductRepositoryImpl
 import com.deardhruv.adaptivelayout.data.source.ProductDataSource
 import com.deardhruv.adaptivelayout.domain.usecase.GetProductByIdUseCase
 import com.deardhruv.adaptivelayout.domain.usecase.GetProductsUseCase
-import com.deardhruv.adaptivelayout.presentation.navigation.AdaptiveNavigationScaffold
 import com.deardhruv.adaptivelayout.presentation.products.ProductViewModel
-import com.deardhruv.adaptivelayout.util.DevicePostureType
-import com.deardhruv.adaptivelayout.util.WindowInfo
-import com.deardhruv.adaptivelayout.util.detectDevicePosture
-import com.deardhruv.adaptivelayout.util.rememberWindowInfo
+import com.deardhruv.adaptivelayout.ui.theme.AdaptiveLayoutTheme
 
 /**
  * Main Activity - Entry point for the adaptive layout demo app
