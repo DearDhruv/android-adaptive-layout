@@ -253,10 +253,10 @@ var useDarkThemeGlobal = false
 @Composable
 fun AdaptiveLayoutTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(), // Renamed for clarity
-    dynamicColor: Boolean = false, // true,
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val systemHighContrast = false // isSystemInHighContrastMode()
+    val systemHighContrast = isSystemInHighContrastMode()
 
     val colorScheme = when {
 
