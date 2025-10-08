@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.presentation.products
+package com.deardhruv.adaptivelayout.presentation.products
 
 /*
  *  ProductUiState.kt
@@ -8,7 +8,7 @@ package com.example.adaptivelayout.presentation.products
  */
 
 
-import com.example.adaptivelayout.domain.model.ProductDomain
+import com.deardhruv.adaptivelayout.domain.model.ProductDomain
 
 /**
  * UI state for product screens

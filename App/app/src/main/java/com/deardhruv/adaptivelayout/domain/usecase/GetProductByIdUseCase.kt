@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.domain.usecase
+package com.deardhruv.adaptivelayout.domain.usecase
 
 /*
  *  GetProductByIdUseCase.kt
@@ -7,8 +7,8 @@ package com.example.adaptivelayout.domain.usecase
  *  Copyright ©2025 DearDhruv. All rights reserved.
  */
 
-import com.example.adaptivelayout.domain.model.ProductDomain
-import com.example.adaptivelayout.domain.repository.IProductRepository
+import com.deardhruv.adaptivelayout.domain.model.ProductDomain
+import com.deardhruv.adaptivelayout.domain.repository.IProductRepository
 import kotlinx.coroutines.flow.Flow
 
 /**

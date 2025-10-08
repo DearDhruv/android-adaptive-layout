@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.domain.model
+package com.deardhruv.adaptivelayout.domain.model
 
 /*
  *  ProductDomain.kt

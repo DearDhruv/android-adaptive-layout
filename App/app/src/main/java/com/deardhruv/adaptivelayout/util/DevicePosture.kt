@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.util
+package com.deardhruv.adaptivelayout.util
 
 /*
  *  DevicePosture.kt

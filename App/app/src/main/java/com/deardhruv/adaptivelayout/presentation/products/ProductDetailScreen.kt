@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.presentation.products
+package com.deardhruv.adaptivelayout.presentation.products
 
 /*
  *  ProductDetailScreen.kt
@@ -41,7 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.adaptivelayout.domain.model.ProductDomain
+import com.deardhruv.adaptivelayout.domain.model.ProductDomain
 
 /**
  * Product detail pane composable

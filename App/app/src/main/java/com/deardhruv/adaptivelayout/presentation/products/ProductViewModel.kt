@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.presentation.products
+package com.deardhruv.adaptivelayout.presentation.products
 
 /*
  *  ProductViewModel.kt
@@ -10,9 +10,9 @@ package com.example.adaptivelayout.presentation.products
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.adaptivelayout.domain.model.ProductDomain
-import com.example.adaptivelayout.domain.usecase.GetProductByIdUseCase
-import com.example.adaptivelayout.domain.usecase.GetProductsUseCase
+import com.deardhruv.adaptivelayout.domain.model.ProductDomain
+import com.deardhruv.adaptivelayout.domain.usecase.GetProductByIdUseCase
+import com.deardhruv.adaptivelayout.domain.usecase.GetProductsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

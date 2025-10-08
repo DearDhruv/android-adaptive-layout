@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.data.source
+package com.deardhruv.adaptivelayout.data.source
 
 /*
  *  ProductDataSource.kt
@@ -7,7 +7,7 @@ package com.example.adaptivelayout.data.source
  *  Copyright ©2025 DearDhruv. All rights reserved.
  */
 
-import com.example.adaptivelayout.data.model.Product
+import com.deardhruv.adaptivelayout.data.model.Product
 import kotlinx.coroutines.delay
 
 /**

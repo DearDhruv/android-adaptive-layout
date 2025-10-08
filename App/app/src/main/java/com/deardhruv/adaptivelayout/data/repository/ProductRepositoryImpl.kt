@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.data.repository
+package com.deardhruv.adaptivelayout.data.repository
 
 /*
  *  ProductRepositoryImpl.kt
@@ -8,10 +8,10 @@ package com.example.adaptivelayout.data.repository
  */
 
 
-import com.example.adaptivelayout.data.model.Product
-import com.example.adaptivelayout.data.source.ProductDataSource
-import com.example.adaptivelayout.domain.model.ProductDomain
-import com.example.adaptivelayout.domain.repository.IProductRepository
+import com.deardhruv.adaptivelayout.data.model.Product
+import com.deardhruv.adaptivelayout.data.source.ProductDataSource
+import com.deardhruv.adaptivelayout.domain.model.ProductDomain
+import com.deardhruv.adaptivelayout.domain.repository.IProductRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

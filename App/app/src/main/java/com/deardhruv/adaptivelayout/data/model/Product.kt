@@ -1,4 +1,4 @@
-package com.example.adaptivelayout.data.model
+package com.deardhruv.adaptivelayout.data.model
 
 /*
  *  Product.kt
