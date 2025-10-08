@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Internet permission for loading images -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,19 +14,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AdaptiveLayout">
+
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true"
             android:label="@string/app_name"
             android:resizeableActivity="true"
             android:theme="@style/Theme.AdaptiveLayout"
+            android:windowSoftInputMode="adjustResize"
             tools:targetApi="24">
+
+            <!-- Enable resizability for tablets/foldables/desktop -->
+            <meta-data
+                android:name="android.supports_size_changes"
+                android:value="true" />
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Enable adaptive layouts for Android 16+ -->
+        <meta-data
+            android:name="android.allow_ignore_orientation_request"
+            android:value="true" />
     </application>
 
 </manifest>
