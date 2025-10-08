@@ -1,0 +1,6 @@
+/build
+/indoor/release/*
+/indoor/debug/output-metadata.json
+/outdoor/release/baselineProfiles/0/app-outdoor-release.dm
+/outdoor/release/baselineProfiles/1/app-outdoor-release.dm
+/outdoor/release/output-metadata.json
