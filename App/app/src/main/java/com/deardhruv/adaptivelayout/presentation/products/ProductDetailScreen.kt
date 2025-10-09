@@ -12,21 +12,21 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -60,6 +60,7 @@ fun ProductDetailPane(
     }
 
     Scaffold(
+        contentWindowInsets = WindowInsets.safeContent,
         topBar = {
             TopAppBar(
                 title = { Text(product.name, maxLines = 1) },
@@ -68,7 +69,7 @@ fun ProductDetailPane(
                     if (!isListVisible) {
                         IconButton(onClick = onBackClick) {
                             Icon(
-                                imageVector = Icons.Default.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
                                 contentDescription = "Back"
                             )
                         }
@@ -80,30 +81,24 @@ fun ProductDetailPane(
                 )
             )
         },
-        bottomBar = {
-            BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            ) {
-                Spacer(modifier = Modifier.weight(1f))
-                Button(
-                    onClick = { /* Add to cart */ },
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                onClick = { /* Add to cart */ },
+                icon = {
                     Icon(
-                        imageVector = Icons.Default.ShoppingCart,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp)
+                        Icons.Filled.ShoppingCart,
+                        contentDescription = "Add to Cart icon"
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Add to Cart")
-                }
-            }
-        }
+                },
+                text = { Text("Add to Cart") },
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
+        },
     ) { paddingValues ->
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
         ) {
             // Product Image
@@ -117,7 +112,7 @@ fun ProductDetailPane(
             )
 
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp)
             ) {
                 // Product Name and Price
                 Row(
@@ -205,6 +200,8 @@ fun ProductDetailPane(
                 DetailRow(label = "Category", value = product.category)
                 DetailRow(label = "Rating", value = "${product.rating} stars")
                 DetailRow(label = "Availability", value = if (product.isAvailable) "In Stock" else "Out of Stock")
+                Spacer(modifier = Modifier.height(80.dp))
+
             }
         }
     }

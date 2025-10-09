@@ -62,13 +62,13 @@ fun AdaptiveNavigationScaffold(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Adaptive Layout Demo") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            )
+//            TopAppBar(
+//                title = { Text("Adaptive Layout Demo") },
+//                colors = TopAppBarDefaults.topAppBarColors(
+//                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+//                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+//                )
+//            )
         },
         bottomBar = {
             if (showBottomBar) {

@@ -28,10 +28,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,32 +48,47 @@ fun ProductListPane(
     onProductClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Products") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            )
-        }
-    ) { paddingValues ->
+
+    Column() {
+        Text(
+            text = "Products",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(top = 8.dp)
+        )
         LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(paddingValues),
+            modifier = modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
             items(products, key = { it.id }) { product ->
                 ProductListItem(
                     product = product,
                     onClick = { onProductClick(product.id) }
                 )
             }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
         }
+
     }
+//    Scaffold(
+//        topBar = {
+//            TopAppBar(
+//                title = { Text("Products") },
+//                colors = TopAppBarDefaults.topAppBarColors(
+//                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+//                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+//                )
+//            )
+//        }
+//    ) { paddingValues ->
+//
+//    }
 }
 
 /**
