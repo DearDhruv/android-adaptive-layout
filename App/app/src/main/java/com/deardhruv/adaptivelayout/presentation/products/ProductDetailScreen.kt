@@ -72,7 +72,7 @@ fun ProductDetailPane(
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                expanded = false,
+                expanded = !isListVisible,
                 onClick = { /* Add to cart */ },
                 icon = {
                     Icon(
@@ -104,7 +104,7 @@ fun ProductDetailPane(
             )
 
             Column(
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding( 16.dp)
             ) {
                 // Product Name and Price
                 Row(
@@ -193,7 +193,6 @@ fun ProductDetailPane(
                 DetailRow(label = "Rating", value = "${product.rating} stars")
                 DetailRow(label = "Availability", value = if (product.isAvailable) "In Stock" else "Out of Stock")
                 Spacer(modifier = Modifier.height(80.dp))
-
             }
         }
     }
