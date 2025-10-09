@@ -24,73 +24,97 @@ import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material.icons.filled.Tablet
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowWidthSizeClass
+import com.deardhruv.adaptivelayout.presentation.components.TopBarTitle
+import com.deardhruv.adaptivelayout.presentation.components.alPinnedScrollBehavior
 import com.deardhruv.adaptivelayout.util.WindowInfo
 
 /**
  * Home screen showcasing adaptive layout capabilities
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     windowInfo: WindowInfo,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(24.dp)
-    ) {
-        // Header
-        Text(
-            text = "Android 17 Adaptive Layouts",
-            style = MaterialTheme.typography.headlineLarge,
-            textAlign = TextAlign.Center
-        )
+    val scrollBehavior = TopAppBarDefaults.alPinnedScrollBehavior()
 
-        Text(
-            text = "This app demonstrates adaptive layouts across phones, tablets, foldables, and desktop windows",
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Current screen info
-        CurrentScreenInfoCard(windowInfo)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Features
-        Text(
-            text = "Key Features",
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        val features = listOf(
-            Triple(Icons.Default.PhoneAndroid, "Window Size Classes", "Compact, Medium, and Expanded layouts"),
-            Triple(Icons.Default.Tablet, "List-Detail Layouts", "Adaptive navigation for all screen sizes"),
-            Triple(Icons.Default.Computer, "Foldable Support", "Tabletop and Book postures")
-        )
-
-        features.forEach { (icon, title, description) ->
-            FeatureCard(
-                icon = icon,
-                title = title,
-                description = description
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopBarTitle(
+                scrollBehavior = scrollBehavior,
+                title = "Home",
+                isCenterContent = false,
+                showBack = false,
             )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(top = paddingValues.calculateTopPadding())
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp, vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            // Header
+            Text(
+                text = "Android 17 Adaptive Layouts",
+                style = MaterialTheme.typography.headlineLarge,
+                textAlign = TextAlign.Center
+            )
+
+            Text(
+                text = "This app demonstrates adaptive layouts across phones, tablets, foldables, and desktop windows",
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Current screen info
+            CurrentScreenInfoCard(windowInfo)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Features
+            Text(
+                text = "Key Features",
+                style = MaterialTheme.typography.headlineMedium
+            )
+
+            val features = listOf(
+                Triple(Icons.Default.PhoneAndroid, "Window Size Classes", "Compact, Medium, and Expanded layouts"),
+                Triple(Icons.Default.Tablet, "List-Detail Layouts", "Adaptive navigation for all screen sizes"),
+                Triple(Icons.Default.Computer, "Foldable Support", "Tabletop and Book postures")
+            )
+
+            features.forEach { (icon, title, description) ->
+                FeatureCard(
+                    icon = icon,
+                    title = title,
+                    description = description
+                )
+            }
+            Spacer(modifier = Modifier.height(320.dp))
+
         }
     }
 }

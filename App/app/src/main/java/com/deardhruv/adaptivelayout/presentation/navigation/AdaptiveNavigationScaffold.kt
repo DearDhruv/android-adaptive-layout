@@ -7,6 +7,7 @@ package com.deardhruv.adaptivelayout.presentation.navigation
  *  Copyright ©2025 DearDhruv. All rights reserved.
  */
 
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,8 +23,6 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,12 +37,15 @@ import com.deardhruv.adaptivelayout.presentation.products.ProductViewModel
 import com.deardhruv.adaptivelayout.presentation.settings.SettingsScreen
 import com.deardhruv.adaptivelayout.util.WindowInfo
 
+
 /**
  * Adaptive navigation scaffold that changes navigation UI based on screen size
  * - Compact: Bottom Navigation
  * - Medium: Navigation Rail
  * - Expanded: Navigation Rail (or Drawer)
  */
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdaptiveNavigationScaffold(
@@ -51,7 +53,6 @@ fun AdaptiveNavigationScaffold(
     productViewModel: ProductViewModel,
     modifier: Modifier = Modifier
 ) {
-    // Enhanced state management with Saver
     var navigationState by rememberSaveable(stateSaver = NavigationState.Saver) {
         mutableStateOf(NavigationState())
     }
@@ -61,15 +62,6 @@ fun AdaptiveNavigationScaffold(
     val showBottomBar = windowInfo.widthSizeClass == WindowWidthSizeClass.COMPACT
 
     Scaffold(
-        topBar = {
-//            TopAppBar(
-//                title = { Text("Adaptive Layout Demo") },
-//                colors = TopAppBarDefaults.topAppBarColors(
-//                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-//                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-//                )
-//            )
-        },
         bottomBar = {
             if (showBottomBar) {
                 NavigationBar(
@@ -100,13 +92,12 @@ fun AdaptiveNavigationScaffold(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
         ) {
             if (showNavigationRail) {
                 NavigationRail(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 ) {
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
                     AppDestination.entries.forEach { destination ->
                         NavigationRailItem(
                             icon = {
@@ -127,7 +118,11 @@ fun AdaptiveNavigationScaffold(
                 }
             }
 
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = paddingValues.calculateBottomPadding())
+            ) {
                 when (navigationState.currentDestination) {
                     AppDestination.HOME -> {
                         HomeScreen(windowInfo = windowInfo)
