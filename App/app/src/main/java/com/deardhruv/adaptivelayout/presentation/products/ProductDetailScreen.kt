@@ -89,6 +89,7 @@ fun ProductDetailPane(
         Column(
             modifier = modifier
                 .fillMaxSize()
+//                .padding(paddingValues) // Use the entire paddingValues
                 .padding(top = paddingValues.calculateTopPadding())
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
