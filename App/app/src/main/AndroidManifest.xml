@@ -4,6 +4,7 @@
 
     <!-- Internet permission for loading images -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AdaptiveLayout"
+        android:usesCleartextTraffic="true"
         tools:targetApi="36">
 
         <activity
@@ -25,7 +27,7 @@
             android:resizeableActivity="true"
             android:theme="@style/Theme.AdaptiveLayout"
             android:windowSoftInputMode="adjustResize"
-            tools:targetApi="24">
+            tools:targetApi="36">
 
             <!-- Enable resizability for tablets/foldables/desktop -->
             <meta-data
