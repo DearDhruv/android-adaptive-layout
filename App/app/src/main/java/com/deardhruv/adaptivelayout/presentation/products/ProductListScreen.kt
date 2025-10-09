@@ -104,8 +104,7 @@ fun ProductListItem(
             AsyncImage(
                 model = product.imageUrl,
                 contentDescription = product.name,
-                modifier = Modifier
-                    .size(80.dp),
+                modifier = Modifier.size(80.dp),
                 contentScale = ContentScale.Crop
             )
 
