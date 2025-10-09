@@ -28,15 +28,20 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.deardhruv.adaptivelayout.domain.model.ProductDomain
+import com.deardhruv.adaptivelayout.presentation.components.TopBarTitle
+import com.deardhruv.adaptivelayout.presentation.components.alPinnedScrollBehavior
 
 /**
  * Product list pane composable
@@ -48,47 +53,42 @@ fun ProductListPane(
     onProductClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val scrollBehavior = TopAppBarDefaults.alPinnedScrollBehavior()
 
-    Column() {
-        Text(
-            text = "Products",
-            style = MaterialTheme.typography.headlineMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-        LazyColumn(
-            modifier = modifier.fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopBarTitle(
+                scrollBehavior = scrollBehavior,
+                title = "Products",
+                isCenterContent = false,
+                showBack = false,
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(top = paddingValues.calculateTopPadding()),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            item {
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            items(products, key = { it.id }) { product ->
-                ProductListItem(
-                    product = product,
-                    onClick = { onProductClick(product.id) }
-                )
-            }
-            item {
-                Spacer(modifier = Modifier.height(8.dp))
+            LazyColumn(
+                modifier = modifier.fillMaxSize(),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(products, key = { it.id }) { product ->
+                    ProductListItem(
+                        product = product,
+                        onClick = { onProductClick(product.id) }
+                    )
+                }
+                item {
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
         }
-
     }
-//    Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text("Products") },
-//                colors = TopAppBarDefaults.topAppBarColors(
-//                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-//                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-//                )
-//            )
-//        }
-//    ) { paddingValues ->
-//
-//    }
 }
 
 /**
