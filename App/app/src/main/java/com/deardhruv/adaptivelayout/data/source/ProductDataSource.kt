@@ -19,7 +19,7 @@ class ProductDataSource {
 
     suspend fun getProducts(): List<Product> {
         // Simulate network delay
-        delay(500)
+        // delay(500)
 
         return List(30) { index ->
             Product(
@@ -44,7 +44,7 @@ class ProductDataSource {
     }
 
     suspend fun getProductById(productId: String): Product? {
-        delay(300)
+        //delay(300)
         return getProducts().find { it.id == productId }
     }
 }
