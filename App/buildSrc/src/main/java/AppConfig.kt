@@ -26,7 +26,7 @@ object AppConfig {
     val vyJvmTarget = "21" // org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_19
     val kotlinVersion = "2.2" // org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2
 
-    const val ndkVersion = "28.1.13356709"
+    const val ndkVersion = "29.0.14206865"
 
     const val dimension = "environment"
 
