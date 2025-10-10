@@ -23,7 +23,7 @@ object AppConfig {
     // const val implementationSdkPreview = "UpsideDownCake"
     val javaVersion: JavaVersion = JavaVersion.VERSION_21
 
-    val vyJvmTarget = "21" // org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_19
+    val alJvmTarget = "21" // org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_19
     val kotlinVersion = "2.2" // org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2
 
     const val ndkVersion = "29.0.14206865"
@@ -86,7 +86,7 @@ object AppConfig {
         print(LogColor.YELLOW_BOLD_BRIGHT)
         println("JavaVersion: $javaVersion")
         print(LogColor.YELLOW_BOLD_BRIGHT)
-        println("JvmTarget: $vyJvmTarget")
+        println("JvmTarget: $alJvmTarget")
         print(LogColor.YELLOW_BOLD_BRIGHT)
         println("kotlinApiVersion: $kotlinApiVersion")
         print(LogColor.YELLOW_BOLD_BRIGHT)

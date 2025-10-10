@@ -15,7 +15,7 @@ plugins {
 }
 
 
-val vyJvmTarget = JvmTarget.fromTarget(AppConfig.vyJvmTarget)
+val alJvmTarget = JvmTarget.fromTarget(AppConfig.alJvmTarget)
 val kotlinVersion = KotlinVersion.fromVersion(AppConfig.kotlinVersion)
 
 val applicationLabelKey = "applicationLabel"
@@ -115,14 +115,14 @@ java {
 
 kotlin {
     compilerOptions {
-        jvmTarget = vyJvmTarget
+        jvmTarget = alJvmTarget
         apiVersion.set(kotlinVersion)
         languageVersion.set(kotlinVersion)
         optIn.add("kotlin.RequiresOptIn")
     }
     target {
         compilerOptions {
-            jvmTarget = vyJvmTarget
+            jvmTarget = alJvmTarget
             apiVersion.set(kotlinVersion)
             languageVersion.set(kotlinVersion)
             optIn.add("kotlin.RequiresOptIn")
