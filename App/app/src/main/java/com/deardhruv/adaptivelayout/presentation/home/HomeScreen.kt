@@ -31,13 +31,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.window.core.layout.WindowWidthSizeClass
 import com.deardhruv.adaptivelayout.presentation.components.TopBarTitle
 import com.deardhruv.adaptivelayout.presentation.components.alPinnedScrollBehavior
 import com.deardhruv.adaptivelayout.util.WindowInfo
@@ -145,9 +145,9 @@ private fun CurrentScreenInfoCard(windowInfo: WindowInfo) {
                 InfoChip(
                     label = "Width Class",
                     value = when (windowInfo.widthSizeClass) {
-                        WindowWidthSizeClass.COMPACT -> "Compact"
-                        WindowWidthSizeClass.MEDIUM -> "Medium"
-                        WindowWidthSizeClass.EXPANDED -> "Expanded"
+                        WindowWidthSizeClass.Compact -> "Compact"
+                        WindowWidthSizeClass.Medium -> "Medium"
+                        WindowWidthSizeClass.Expanded -> "Expanded"
                         else -> "Unknown"
                     }
                 )

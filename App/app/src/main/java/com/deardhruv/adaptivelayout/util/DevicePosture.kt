@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.deardhruv.adaptivelayout.util
 
 /*
@@ -8,9 +10,19 @@ package com.deardhruv.adaptivelayout.util
  */
 
 
+import android.app.Activity
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.HingeInfo
 import androidx.compose.material3.adaptive.Posture
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.graphics.toComposeRect
+import androidx.compose.ui.platform.LocalContext
+import androidx.window.layout.FoldingFeature
+import androidx.window.layout.WindowInfoTracker
+import kotlinx.coroutines.flow.map
 
 /**
  * Represents different device postures for foldables
@@ -24,6 +36,7 @@ enum class DevicePostureType {
 /**
  * Detects the current device posture
  */
+
 @Composable
 fun detectDevicePosture(windowPosture: Posture): DevicePostureType {
     return when {
@@ -31,6 +44,50 @@ fun detectDevicePosture(windowPosture: Posture): DevicePostureType {
         windowPosture.isSeparating -> DevicePostureType.BOOK
         else -> DevicePostureType.NORMAL
     }
+}
+
+
+@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
+@Composable
+fun rememberDevicePosture(): State<Posture> {
+    val activity = LocalContext.current as Activity
+
+    // State for posture, collected from WindowInfoTracker
+    val postureState: State<Posture> = produceState(initialValue = Posture()) {
+        WindowInfoTracker.getOrCreate(activity).windowLayoutInfo(activity)
+            .map { layoutInfo ->
+                // Correctly use calculatePosture to derive the posture
+                calculatePosture(layoutInfo.displayFeatures as List<FoldingFeature>)
+            }
+            .collect { value = it }
+    }
+    return postureState
+
+}
+
+
+fun calculatePosture(foldingFeatures: List<FoldingFeature>): Posture {
+    var isTableTop = false
+    val hingeList = mutableListOf<HingeInfo>()
+    @Suppress("ListIterator")
+    foldingFeatures.forEach {
+        if (
+            it.orientation == FoldingFeature.Orientation.HORIZONTAL &&
+            it.state == FoldingFeature.State.HALF_OPENED
+        ) {
+            isTableTop = true
+        }
+        hingeList.add(
+            HingeInfo(
+                bounds = it.bounds.toComposeRect(),
+                isFlat = it.state == FoldingFeature.State.FLAT,
+                isVertical = it.orientation == FoldingFeature.Orientation.VERTICAL,
+                isSeparating = it.isSeparating,
+                isOccluding = it.occlusionType == FoldingFeature.OcclusionType.FULL,
+            )
+        )
+    }
+    return Posture(isTableTop, hingeList)
 }
 
 /**

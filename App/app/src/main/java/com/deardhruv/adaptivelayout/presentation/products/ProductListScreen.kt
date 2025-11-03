@@ -8,6 +8,7 @@ package com.deardhruv.adaptivelayout.presentation.products
  */
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.deardhruv.adaptivelayout.domain.model.ProductDomain
 import com.deardhruv.adaptivelayout.presentation.components.TopBarTitle
 import com.deardhruv.adaptivelayout.presentation.components.alPinnedScrollBehavior
@@ -113,6 +115,17 @@ fun ProductListItem(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             // Product Image
+            Image(
+                painter = rememberAsyncImagePainter(product.imageUrl),
+                contentDescription = product.description,
+                modifier = Modifier
+                    .size(80.dp),
+                contentScale = ContentScale.Crop
+
+                // .semantics {
+                //     contentDescription = contentDescription
+                // }
+            )
             AsyncImage(
                 model = product.imageUrl,
                 contentDescription = product.name,

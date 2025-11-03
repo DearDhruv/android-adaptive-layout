@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,6 +21,7 @@ import com.deardhruv.adaptivelayout.presentation.products.ProductViewModel
 import com.deardhruv.adaptivelayout.ui.theme.AdaptiveLayoutTheme
 import com.deardhruv.adaptivelayout.util.DevicePostureType
 import com.deardhruv.adaptivelayout.util.detectDevicePosture
+import com.deardhruv.adaptivelayout.util.rememberDevicePosture
 import com.deardhruv.adaptivelayout.util.rememberWindowInfo
 
 class MainActivity : ComponentActivity() {
@@ -40,9 +42,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun AdaptiveLayoutApp() {
-    val windowInfo = rememberWindowInfo()
+    val windowInfo = rememberWindowInfo(rememberDevicePosture())
     val postureType = detectDevicePosture(windowInfo.windowPosture)
 
     // Use remember to keep ViewModel instance across recompositions

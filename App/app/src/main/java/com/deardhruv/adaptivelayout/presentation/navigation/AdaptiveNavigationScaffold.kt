@@ -23,6 +23,7 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +31,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.window.core.layout.WindowWidthSizeClass
 import com.deardhruv.adaptivelayout.presentation.components.AdaptiveProductListDetailLayout
 import com.deardhruv.adaptivelayout.presentation.home.HomeScreen
 import com.deardhruv.adaptivelayout.presentation.products.ProductViewModel
@@ -57,9 +57,9 @@ fun AdaptiveNavigationScaffold(
         mutableStateOf(NavigationState())
     }
 
-    val showNavigationRail = windowInfo.widthSizeClass == WindowWidthSizeClass.MEDIUM ||
-            windowInfo.widthSizeClass == WindowWidthSizeClass.EXPANDED
-    val showBottomBar = windowInfo.widthSizeClass == WindowWidthSizeClass.COMPACT
+    val showNavigationRail =
+        windowInfo.widthSizeClass == WindowWidthSizeClass.Medium || windowInfo.widthSizeClass == WindowWidthSizeClass.Expanded
+    val showBottomBar = windowInfo.widthSizeClass == WindowWidthSizeClass.Compact
 
     Scaffold(
         bottomBar = {

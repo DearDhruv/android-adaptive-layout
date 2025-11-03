@@ -8,47 +8,54 @@ package com.deardhruv.adaptivelayout.util
  */
 
 
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import android.app.Activity
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.Posture
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.window.core.layout.WindowHeightSizeClass
-import androidx.window.core.layout.WindowSizeClass
-import androidx.window.core.layout.WindowWidthSizeClass
 
 /**
- * Remembers window information including size class and posture
+ * Contains up-to-date window size and posture information using latest APIs.
  */
-@Composable
-fun rememberWindowInfo(): WindowInfo {
-    val windowAdaptiveInfo = currentWindowAdaptiveInfo()
-    val configuration = LocalConfiguration.current
-
-    return WindowInfo(
-        windowSizeClass = windowAdaptiveInfo.windowSizeClass,
-        windowPosture = windowAdaptiveInfo.windowPosture,
-        screenWidthDp = configuration.screenWidthDp.dp,
-        screenHeightDp = configuration.screenHeightDp.dp
-    )
-}
-
-/**
- * Contains window size and posture information
- */
-data class WindowInfo(
+data class WindowInfo @OptIn(ExperimentalMaterial3AdaptiveApi::class) constructor(
     val windowSizeClass: WindowSizeClass,
-    val windowPosture: androidx.compose.material3.adaptive.Posture,
+    val windowPosture: Posture,          // Use Posture if foldables/tablets supported
     val screenWidthDp: Dp,
     val screenHeightDp: Dp
 ) {
     val widthSizeClass: WindowWidthSizeClass
-        get() = windowSizeClass.windowWidthSizeClass
+        get() = windowSizeClass.widthSizeClass
 
     val heightSizeClass: WindowHeightSizeClass
-        get() = windowSizeClass.windowHeightSizeClass
+        get() = windowSizeClass.heightSizeClass
 
-    fun isCompact() = widthSizeClass == WindowWidthSizeClass.COMPACT
-    fun isMedium() = widthSizeClass == WindowWidthSizeClass.MEDIUM
-    fun isExpanded() = widthSizeClass == WindowWidthSizeClass.EXPANDED
+    fun isCompact() = widthSizeClass == WindowWidthSizeClass.Compact
+    fun isMedium() = widthSizeClass == WindowWidthSizeClass.Medium
+    fun isExpanded() = widthSizeClass == WindowWidthSizeClass.Expanded
+}
+
+/**
+ * Helper to get up-to-date WindowInfo inside your composables
+ */
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3AdaptiveApi::class)
+@Composable
+fun rememberWindowInfo(posture: State<Posture>): WindowInfo {
+    val activity = LocalContext.current as Activity
+    val configuration = LocalConfiguration.current
+    val windowSizeClass = calculateWindowSizeClass(activity)
+
+    return WindowInfo(
+        windowSizeClass = windowSizeClass,
+        windowPosture = posture.value,
+        screenWidthDp = Dp(configuration.screenWidthDp.toFloat()),
+        screenHeightDp = Dp(configuration.screenHeightDp.toFloat())
+    )
 }
