@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.deardhruv.adaptivelayout.presentation.components.AdaptiveProductListDetailLayout
+import com.deardhruv.adaptivelayout.presentation.custom.CustomAdaptiveLayoutScreen
 import com.deardhruv.adaptivelayout.presentation.home.HomeScreen
 import com.deardhruv.adaptivelayout.presentation.products.ProductViewModel
 import com.deardhruv.adaptivelayout.presentation.settings.SettingsScreen
@@ -133,6 +134,10 @@ fun AdaptiveNavigationScaffold(
 
                     AppDestination.SETTINGS -> {
                         SettingsScreen(windowInfo = windowInfo)
+                    }
+                    AppDestination.CUSTOM -> {
+                        // Show the custom adaptive layout screen here
+                        CustomAdaptiveLayoutScreen(windowInfo = windowInfo)
                     }
                 }
             }

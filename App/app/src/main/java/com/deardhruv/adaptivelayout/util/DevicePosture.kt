@@ -11,6 +11,9 @@ package com.deardhruv.adaptivelayout.util
 
 
 import android.app.Activity
+import android.content.Context
+import android.content.res.Configuration
+import android.view.WindowManager
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.HingeInfo
 import androidx.compose.material3.adaptive.Posture
@@ -89,6 +92,13 @@ fun calculatePosture(foldingFeatures: List<FoldingFeature>): Posture {
     }
     return Posture(isTableTop, hingeList)
 }
+
+
+fun isPortraitMode(context: Context): Boolean {
+    val orientation = context.resources.configuration.orientation
+    return orientation == Configuration.ORIENTATION_PORTRAIT
+}
+
 
 /**
  * Extension properties for Posture detection

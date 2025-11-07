@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
@@ -36,5 +37,10 @@ enum class AppDestination(
         icon = Icons.Default.Settings,
         label = "Settings",
         contentDescription = "Navigate to Settings"
-    )
+    ),
+    CUSTOM(
+        icon = Icons.Default.Star,
+        label = "Custom",
+        contentDescription = "Navigate to Custom Adaptive Layout"
+    ),
 }
