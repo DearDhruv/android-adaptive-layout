@@ -89,10 +89,7 @@ fun AdaptiveNavigationScaffold(
         },
         modifier = modifier
     ) { paddingValues ->
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
+        Row(modifier = Modifier.fillMaxSize()) {
             if (showNavigationRail) {
                 NavigationRail(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer

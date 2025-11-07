@@ -11,6 +11,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.deardhruv.adaptivelayout.data.repository.ProductRepositoryImpl
 import com.deardhruv.adaptivelayout.data.source.ProductDataSource
@@ -48,11 +50,9 @@ fun AdaptiveLayoutApp() {
     val windowInfo = rememberWindowInfo(rememberDevicePosture())
     val postureType = detectDevicePosture(windowInfo.windowPosture)
 
-    // Use remember to keep ViewModel instance across recompositions
-    // ViewModel itself handles configuration changes
-    val productViewModel: ProductViewModel = viewModel(
-        factory = ProductViewModelFactory()
-    )
+    // The viewModel() composable from lifecycle-viewmodel-compose automatically
+    // handles retention across recompositions and configuration changes.
+    val productViewModel: ProductViewModel = viewModel(factory = ProductViewModelFactory())
 
     when (postureType) {
         DevicePostureType.TABLETOP,
@@ -66,8 +66,8 @@ fun AdaptiveLayoutApp() {
     }
 }
 
-class ProductViewModelFactory : androidx.lifecycle.ViewModelProvider.Factory {
-    override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
+class ProductViewModelFactory : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ProductViewModel::class.java)) {
             val dataSource = ProductDataSource()
             val repository = ProductRepositoryImpl(dataSource)

@@ -10,9 +10,11 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.PaneAdaptedValue
+import androidx.compose.material3.adaptive.layout.calculatePaneScaffoldDirective
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
@@ -42,7 +44,11 @@ fun AdaptiveProductListDetailLayout(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val selectedProductState by viewModel.selectedProduct.collectAsStateWithLifecycle()
-    val navigator = rememberListDetailPaneScaffoldNavigator<String>()
+    // This is the corrected block
+    val navigator = rememberListDetailPaneScaffoldNavigator<String>(
+        scaffoldDirective = calculatePaneScaffoldDirective(currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true))
+    )
+
     val scope = rememberCoroutineScope()
 
     BackHandler(navigator.canNavigateBack()) {
@@ -135,7 +141,7 @@ fun AdaptiveProductListDetailLayout(
 private fun LoadingScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = androidx.compose.ui.Alignment.Center
+        contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }

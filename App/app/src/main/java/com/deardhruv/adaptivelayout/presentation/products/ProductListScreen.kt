@@ -126,12 +126,6 @@ fun ProductListItem(
                 //     contentDescription = contentDescription
                 // }
             )
-            AsyncImage(
-                model = product.imageUrl,
-                contentDescription = product.name,
-                modifier = Modifier.size(80.dp),
-                contentScale = ContentScale.Crop
-            )
 
             // Product Info
             Column(

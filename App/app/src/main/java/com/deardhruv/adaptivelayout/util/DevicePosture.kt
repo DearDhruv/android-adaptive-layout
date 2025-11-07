@@ -116,4 +116,4 @@ val HingeInfo.isHalfOpened: Boolean
     get() = !isFlatOpened
 
 val HingeInfo.isFlatOpened: Boolean
-    get() = isFlatOpened
+    get() = isFlat
