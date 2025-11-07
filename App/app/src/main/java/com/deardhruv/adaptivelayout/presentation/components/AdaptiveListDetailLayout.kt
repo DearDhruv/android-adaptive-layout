@@ -45,7 +45,7 @@ fun AdaptiveProductListDetailLayout(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val selectedProductState by viewModel.selectedProduct.collectAsStateWithLifecycle()
     // This is the corrected block
-    val navigator = rememberListDetailPaneScaffoldNavigator<String>(
+    val navigator = rememberListDetailPaneScaffoldNavigator<String>( // String - Product Ids
         scaffoldDirective = calculatePaneScaffoldDirective(currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true))
     )
 
