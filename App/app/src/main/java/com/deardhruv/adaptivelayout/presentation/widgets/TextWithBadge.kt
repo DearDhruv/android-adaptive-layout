@@ -32,6 +32,7 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 
 /**
+ * https://gist.github.com/alexvanyo/0bfb9ceded87136cc89f9ed7ca2216e0
  * Display a block of text, with an icon appearing in the last line if there is enough space.
  * Otherwise, display the icon on its own line, at the end.
  *

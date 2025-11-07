@@ -35,6 +35,7 @@ import kotlin.math.max
 import kotlin.text.Typography.ellipsis
 
 /**
+ * https://gist.github.com/alexvanyo/0166c437a867cdd9760bae59a296b341
  * Display a block of text with a max number of lines.
  *
  * If there is enough space to display all of the text, display it.

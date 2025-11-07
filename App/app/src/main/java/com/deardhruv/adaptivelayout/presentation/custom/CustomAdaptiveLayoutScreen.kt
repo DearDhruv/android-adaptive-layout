@@ -8,49 +8,99 @@ package com.deardhruv.adaptivelayout.presentation.custom
  */
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.deardhruv.adaptivelayout.presentation.components.alPinnedScrollBehavior
 import com.deardhruv.adaptivelayout.presentation.widgets.AdaptiveButtonsEnd
 import com.deardhruv.adaptivelayout.presentation.widgets.MoreButtonTextEnd
 import com.deardhruv.adaptivelayout.presentation.widgets.TextWithBadgeEnd
 import com.deardhruv.adaptivelayout.util.WindowInfo
 import com.deardhruv.adaptivelayout.util.isPortraitMode
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomAdaptiveLayoutScreen(
     windowInfo: WindowInfo,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    when (windowInfo.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> {
-            if (isPortraitMode(context)) {
-                CompactPortraitLayout(modifier)
-            } else {
-                CompactLandscapeLayout(modifier)
-            }
-        }
+    val scrollBehavior = TopAppBarDefaults.alPinnedScrollBehavior()
 
-        WindowWidthSizeClass.Medium -> {
-            if (isPortraitMode(context)) {
-                MediumPortraitLayout(modifier)
-            } else {
-                MediumLandscapeLayout(modifier)
-            }
-        }
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    ) { paddingValues ->
 
-        WindowWidthSizeClass.Expanded -> {
-            ExpandedLayout(modifier)
+        val scrollState = rememberScrollState()
+
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(paddingValues)
+        ) {
+            // Informational section describing adaptive layouts
+            Text(
+                text = "Adaptive Layouts: Are Your Apps Ready?",
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .padding(horizontal = 16.dp)
+            )
+            Text(
+                text = "Android 17 making adaptive layouts mandatory, developers must adopt window size classes to ensure UI adapts smoothly across phones, foldables, tablets, and desktops. It's crucial to handle state correctly on configuration changes and maintain accessibility and performance in adaptive layouts.",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier
+                    .padding(bottom = 8.dp)
+                    .padding(horizontal = 16.dp)
+            )
+            Spacer(
+                modifier = Modifier
+                    .padding(vertical = 12.dp)
+                    .height(1.dp)
+                    .background(MaterialTheme.colorScheme.secondary)
+            )
+            val context = LocalContext.current
+            when (windowInfo.widthSizeClass) {
+                WindowWidthSizeClass.Compact -> {
+                    if (isPortraitMode(context)) {
+                        CompactPortraitLayout(modifier)
+                    } else {
+                        CompactLandscapeLayout(modifier)
+                    }
+                }
+
+                WindowWidthSizeClass.Medium -> {
+                    if (isPortraitMode(context)) {
+                        MediumPortraitLayout(modifier)
+                    } else {
+                        MediumLandscapeLayout(modifier)
+                    }
+                }
+
+                WindowWidthSizeClass.Expanded -> {
+                    ExpandedLayout(modifier)
+                }
+
+            }
         }
     }
 }
@@ -146,7 +196,7 @@ private fun ExpandedLayout(modifier: Modifier) {
         Box(
             modifier = Modifier.weight(3f)
         ) {
-            Text("Expanded content area for monitor or desktop screens")
+            Text("Expanded content area for more content.")
         }
     }
 }

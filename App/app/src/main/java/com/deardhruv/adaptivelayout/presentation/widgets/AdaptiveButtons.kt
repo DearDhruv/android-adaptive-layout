@@ -20,7 +20,9 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.tooling.preview.Preview
 import kotlin.math.max
 
+
 /**
+ * https://gist.github.com/alexvanyo/d246ce358cbe63488f167bcf3357a77f
  * Show two buttons:
  * If there is room to show both when each fill up 50% of the available width, show them
  * horizontally side-by-side with each having 50% of the width.
@@ -40,20 +42,20 @@ import kotlin.math.max
  * |                            |
  * +----------------------------+
  */
-@Preview(widthDp = 200, heightDp = 300)
-@Preview(widthDp = 300, heightDp = 300)
+@Preview(widthDp = 100, heightDp = 300)
+@Preview(widthDp = 300, heightDp = 600)
 @Composable
 fun AdaptiveButtonsEnd() {
     Layout(
         content = {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { },
                 modifier = Modifier.layoutId("primary")
             ) {
                 Text("Primary")
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {  },
                 modifier = Modifier.layoutId("secondary")
             ) {
                 Text("Secondary")

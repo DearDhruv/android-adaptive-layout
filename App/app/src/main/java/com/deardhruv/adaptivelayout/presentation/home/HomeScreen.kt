@@ -75,7 +75,7 @@ fun HomeScreen(
         ) {
             // Header
             Text(
-                text = "Android 17 Adaptive Layouts",
+                text = "Adaptive Layouts",
                 style = MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center
             )
