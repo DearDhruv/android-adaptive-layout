@@ -23,6 +23,10 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,7 +51,7 @@ import com.deardhruv.adaptivelayout.util.WindowInfo
  */
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun AdaptiveNavigationScaffold(
     windowInfo: WindowInfo,
@@ -91,6 +95,32 @@ fun AdaptiveNavigationScaffold(
         modifier = modifier
     ) { paddingValues ->
         Row(modifier = Modifier.fillMaxSize()) {
+//            if (showNavigationRail) {
+//                NavigationSuiteScaffold(
+//                    navigationSuiteItems = {
+//                        AppDestination.entries.forEach {
+//                            item(
+//                                selected = navigationState.currentDestination == it,
+//                                onClick = {
+//                                    navigationState = navigationState.copy(
+//                                        currentDestination = it
+//                                    )
+//                                },
+//                                label = { Text(it.label) },
+//                                icon = {
+//                                    Icon(
+//                                        imageVector = it.icon,
+//                                        contentDescription = it.contentDescription
+//                                    )
+//                                },
+//                                alwaysShowLabel = true,
+//                            )
+//                        }
+//                    },
+//                    layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true))
+//                )
+//            }
+
             if (showNavigationRail) {
                 NavigationRail(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
@@ -135,6 +165,7 @@ fun AdaptiveNavigationScaffold(
                     AppDestination.SETTINGS -> {
                         SettingsScreen(windowInfo = windowInfo)
                     }
+
                     AppDestination.CUSTOM -> {
                         // Show the custom adaptive layout screen here
                         CustomAdaptiveLayoutScreen(windowInfo = windowInfo)

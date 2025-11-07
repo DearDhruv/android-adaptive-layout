@@ -13,11 +13,7 @@ composeVersion = "1.9.4"
 constraintlayoutCompose = "1.1.1"
 coreKtx = "1.17.0"
 coreSplashscreen = "1.2.0"
-eventEmitter = "1.4.0"
 firebase-crashlytics = "3.0.6"
-firebaseBom = "34.5.0"
-firebaseCrashlyticsKtx = "19.4.4"
-firebaseMessagingKtx = "24.1.2"
 httpclient5 = "5.5.1"
 httpcore5 = "5.3.6"
 kotlin = "2.2.21"
@@ -32,16 +28,13 @@ lifecycleViewmodelNavigation3 = "1.0.0-alpha04"
 loggingInterceptor = "5.3.0"
 material = "1.13.0"
 material3 = "1.4.0"
+material3AdaptiveNavigationSuite = "1.4.0"
 materialIcons = "1.7.8"
 materialVersion = "1.9.4"
 navigation3Runtime = "1.0.0-rc01"
 navigation3Ui = "1.0.0-rc01"
 okhttp = "5.3.0"
-preferenceKtx = "1.2.1"
 retrofit = "3.0.0"
-room = "2.8.3"
-startupRuntime = "1.2.0"
-tools = "1.0.0-alpha13"
 window = "1.5.0"
 windowExtensions = "1.0.0-alpha01"
 
@@ -66,6 +59,7 @@ androidx-compose-foundation = { group = "androidx.compose.foundation", name = "f
 androidx-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIcons" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIcons" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-material3-adaptive-navigation-suite = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite", version.ref = "material3AdaptiveNavigationSuite" }
 androidx-compose-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
@@ -80,13 +74,7 @@ androidx-material = { module = "androidx.compose.material:material", version.ref
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3Runtime" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3Ui" }
-androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
-androidx-privacysandbox-tools = { module = "androidx.privacysandbox.tools:tools", version.ref = "tools" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
-androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 androidx-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeVersion" }
-androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntime" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
@@ -97,11 +85,6 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose"
 coil-svg = { module = "io.coil-kt:coil-svg", version.ref = "coilCompose" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 converter-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
-event-emitter = { module = "com.github.Zhuinden:event-emitter", version.ref = "eventEmitter" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx", version.ref = "firebaseCrashlyticsKtx" }
-firebase-messaging-ktx = { group = "com.google.firebase", name = "firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 httpclient5 = { module = "org.apache.httpcomponents.client5:httpclient5", version.ref = "httpclient5" }
 httpcore5 = { module = "org.apache.httpcomponents.core5:httpcore5", version.ref = "httpcore5" }
