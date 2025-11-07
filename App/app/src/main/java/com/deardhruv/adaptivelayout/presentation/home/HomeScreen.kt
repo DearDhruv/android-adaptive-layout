@@ -67,7 +67,7 @@ fun HomeScreen(
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = paddingValues.calculateTopPadding())
+                .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -113,7 +113,7 @@ fun HomeScreen(
                     description = description
                 )
             }
-            Spacer(modifier = Modifier.height(320.dp))
+            Spacer(modifier = Modifier.height(280.dp))
 
         }
     }

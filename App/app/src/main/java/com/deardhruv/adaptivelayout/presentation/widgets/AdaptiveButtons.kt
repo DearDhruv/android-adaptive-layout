@@ -9,6 +9,8 @@ package com.deardhruv.adaptivelayout.presentation.widgets
 
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -18,6 +20,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import kotlin.math.max
 
 
@@ -50,13 +53,19 @@ fun AdaptiveButtonsEnd() {
         content = {
             Button(
                 onClick = { },
-                modifier = Modifier.layoutId("primary")
+                modifier = Modifier
+                    .layoutId("primary")
+                    .heightIn(min = 48.dp)
+                    .widthIn(min = 48.dp)
             ) {
                 Text("Primary")
             }
             Button(
-                onClick = {  },
-                modifier = Modifier.layoutId("secondary")
+                onClick = { },
+                modifier = Modifier
+                    .layoutId("secondary")
+                    .heightIn(min = 48.dp)
+                    .widthIn(min = 48.dp)
             ) {
                 Text("Secondary")
             }
@@ -120,6 +129,8 @@ fun AdaptiveButtonsEnd() {
                 }
             }
         },
-        modifier = Modifier.wrapContentHeight().fillMaxWidth()
+        modifier = Modifier
+            .wrapContentHeight()
+            .fillMaxWidth()
     )
 }

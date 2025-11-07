@@ -24,6 +24,9 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -101,84 +104,86 @@ fun AdaptiveNavigationScaffold(
         },
         modifier = modifier
     ) { paddingValues ->
+        paddingValues
         Row(modifier = Modifier.fillMaxSize()) {
-//            if (showNavigationRail) {
-//                NavigationSuiteScaffold(
-//                    navigationSuiteItems = {
-//                        AppDestination.entries.forEach {
-//                            item(
-//                                selected = navigationState.currentDestination == it,
-//                                onClick = {
-//                                    navigationState = navigationState.copy(
-//                                        currentDestination = it
-//                                    )
-//                                },
-//                                label = { Text(it.label) },
-//                                icon = {
-//                                    Icon(
-//                                        imageVector = it.icon,
-//                                        contentDescription = it.contentDescription
-//                                    )
-//                                },
-//                                alwaysShowLabel = true,
-//                            )
-//                        }
-//                    },
-//                    layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true))
-//                )
-//            }
+            //if (showNavigationRail) {
+                NavigationSuiteScaffold(
+                    navigationSuiteItems = {
+                        AppDestination.entries.forEach {
+                            item(
+                                selected = navigationState.currentDestination == it,
+                                onClick = {
+                                    navigationState = navigationState.copy(
+                                        currentDestination = it
+                                    )
+                                },
+                                label = { Text(it.label) },
+                                icon = {
+                                    Icon(
+                                        imageVector = it.icon,
+                                        contentDescription = it.contentDescription
+                                    )
+                                },
+                                alwaysShowLabel = true,
+                            )
+                        }
+                    },
+                    layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true))
+                ){
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        when (navigationState.currentDestination) {
+                            AppDestination.HOME -> {
+                                HomeScreen(windowInfo = windowInfo)
+                            }
 
-            if (showNavigationRail) {
-                NavigationRail(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                ) {
-                    Spacer(modifier = Modifier.height(24.dp))
-                    AppDestination.entries.forEach { destination ->
-                        NavigationRailItem(
-                            icon = {
-                                Icon(
-                                    imageVector = destination.icon,
-                                    contentDescription = destination.contentDescription
-                                )
-                            },
-                            label = { Text(destination.label) },
-                            selected = navigationState.currentDestination == destination,
-                            onClick = {
-                                navigationState = navigationState.copy(
-                                    currentDestination = destination
+                            AppDestination.PRODUCTS -> {
+                                AdaptiveProductListDetailLayout(
+                                    viewModel = productViewModel
                                 )
                             }
-                        )
+
+                            AppDestination.SETTINGS -> {
+                                SettingsScreen(windowInfo = windowInfo)
+                            }
+
+                            AppDestination.CUSTOM -> {
+                                // Show the custom adaptive layout screen here
+                                CustomAdaptiveLayoutScreen(windowInfo = windowInfo)
+                            }
+                        }
                     }
                 }
-            }
+            // }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = paddingValues.calculateBottomPadding())
-            ) {
-                when (navigationState.currentDestination) {
-                    AppDestination.HOME -> {
-                        HomeScreen(windowInfo = windowInfo)
-                    }
+            // if (showNavigationRail) {
+            //     NavigationRail(
+            //         containerColor = MaterialTheme.colorScheme.surfaceContainer
+            //     ) {
+            //         Spacer(modifier = Modifier.height(24.dp))
+            //         AppDestination.entries.forEach { destination ->
+            //             NavigationRailItem(
+            //                 icon = {
+            //                     Icon(
+            //                         imageVector = destination.icon,
+            //                         contentDescription = destination.contentDescription
+            //                     )
+            //                 },
+            //                 label = { Text(destination.label) },
+            //                 selected = navigationState.currentDestination == destination,
+            //                 onClick = {
+            //                     navigationState = navigationState.copy(
+            //                         currentDestination = destination
+            //                     )
+            //                 }
+            //             )
+            //         }
+            //     }
+            // }
 
-                    AppDestination.PRODUCTS -> {
-                        AdaptiveProductListDetailLayout(
-                            viewModel = productViewModel
-                        )
-                    }
 
-                    AppDestination.SETTINGS -> {
-                        SettingsScreen(windowInfo = windowInfo)
-                    }
-
-                    AppDestination.CUSTOM -> {
-                        // Show the custom adaptive layout screen here
-                        CustomAdaptiveLayoutScreen(windowInfo = windowInfo)
-                    }
-                }
-            }
         }
     }
 }

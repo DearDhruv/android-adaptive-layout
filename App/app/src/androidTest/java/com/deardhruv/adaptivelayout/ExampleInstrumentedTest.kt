@@ -21,4 +21,6 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.deardhruv.adaptivelayout", appContext.packageName)
     }
+
+
 }
