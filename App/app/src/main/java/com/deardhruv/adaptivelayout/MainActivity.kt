@@ -21,7 +21,6 @@ import com.deardhruv.adaptivelayout.domain.usecase.GetProductsUseCase
 import com.deardhruv.adaptivelayout.presentation.navigation.AdaptiveNavigationScaffold
 import com.deardhruv.adaptivelayout.presentation.products.ProductViewModel
 import com.deardhruv.adaptivelayout.ui.theme.AdaptiveLayoutTheme
-import com.deardhruv.adaptivelayout.util.DevicePostureType
 import com.deardhruv.adaptivelayout.util.detectDevicePosture
 import com.deardhruv.adaptivelayout.util.rememberDevicePosture
 import com.deardhruv.adaptivelayout.util.rememberWindowInfo
@@ -53,17 +52,11 @@ fun AdaptiveLayoutApp() {
     // The viewModel() composable from lifecycle-viewmodel-compose automatically
     // handles retention across recompositions and configuration changes.
     val productViewModel: ProductViewModel = viewModel(factory = ProductViewModelFactory())
-
-    when (postureType) {
-        DevicePostureType.TABLETOP,
-        DevicePostureType.BOOK,
-        DevicePostureType.NORMAL -> {
-            AdaptiveNavigationScaffold(
-                windowInfo = windowInfo,
-                productViewModel = productViewModel
-            )
-        }
-    }
+    AdaptiveNavigationScaffold(
+        postureType = postureType,
+        windowInfo = windowInfo,
+        productViewModel = productViewModel,
+    )
 }
 
 class ProductViewModelFactory : ViewModelProvider.Factory {

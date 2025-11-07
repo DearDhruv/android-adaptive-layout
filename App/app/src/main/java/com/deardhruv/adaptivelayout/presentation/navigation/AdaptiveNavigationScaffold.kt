@@ -24,9 +24,6 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,6 +37,7 @@ import com.deardhruv.adaptivelayout.presentation.custom.CustomAdaptiveLayoutScre
 import com.deardhruv.adaptivelayout.presentation.home.HomeScreen
 import com.deardhruv.adaptivelayout.presentation.products.ProductViewModel
 import com.deardhruv.adaptivelayout.presentation.settings.SettingsScreen
+import com.deardhruv.adaptivelayout.util.DevicePostureType
 import com.deardhruv.adaptivelayout.util.WindowInfo
 
 
@@ -54,10 +52,19 @@ import com.deardhruv.adaptivelayout.util.WindowInfo
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun AdaptiveNavigationScaffold(
+    postureType: DevicePostureType,
     windowInfo: WindowInfo,
     productViewModel: ProductViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+
+    when (postureType) {
+        DevicePostureType.TABLETOP,
+        DevicePostureType.BOOK,
+        DevicePostureType.NORMAL -> {
+
+        }
+    }
     var navigationState by rememberSaveable(stateSaver = NavigationState.Saver) {
         mutableStateOf(NavigationState())
     }
