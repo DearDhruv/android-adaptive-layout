@@ -17,7 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 @Preview(
     name = "Phone - Portrait",
     device = "spec:width=411dp,height=891dp,dpi=420",
-    showBackground = true
+    showBackground = true,
+    backgroundColor = 0x81248114
 )
 @Preview(
     name = "Phone - Landscape",

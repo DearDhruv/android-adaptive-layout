@@ -13,7 +13,7 @@ package com.deardhruv.adaptivelayout.util
 import android.app.Activity
 import android.content.Context
 import android.content.res.Configuration
-import android.view.WindowManager
+import androidx.activity.compose.LocalActivity
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.HingeInfo
 import androidx.compose.material3.adaptive.Posture
@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.graphics.toComposeRect
-import androidx.compose.ui.platform.LocalContext
 import androidx.window.layout.FoldingFeature
 import androidx.window.layout.WindowInfoTracker
 import kotlinx.coroutines.flow.map
@@ -53,14 +52,16 @@ fun detectDevicePosture(windowPosture: Posture): DevicePostureType {
 @OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun rememberDevicePosture(): State<Posture> {
-    val activity = LocalContext.current as Activity
+    val activity = LocalActivity.current as Activity
 
     // State for posture, collected from WindowInfoTracker
     val postureState: State<Posture> = produceState(initialValue = Posture()) {
         WindowInfoTracker.getOrCreate(activity).windowLayoutInfo(activity)
             .map { layoutInfo ->
                 // Correctly use calculatePosture to derive the posture
-                calculatePosture(layoutInfo.displayFeatures as List<FoldingFeature>)
+                val foldingFeatures = layoutInfo.displayFeatures
+                    .filterIsInstance<FoldingFeature>()
+                calculatePosture(foldingFeatures)
             }
             .collect { value = it }
     }
@@ -72,7 +73,6 @@ fun rememberDevicePosture(): State<Posture> {
 fun calculatePosture(foldingFeatures: List<FoldingFeature>): Posture {
     var isTableTop = false
     val hingeList = mutableListOf<HingeInfo>()
-    @Suppress("ListIterator")
     foldingFeatures.forEach {
         if (
             it.orientation == FoldingFeature.Orientation.HORIZONTAL &&

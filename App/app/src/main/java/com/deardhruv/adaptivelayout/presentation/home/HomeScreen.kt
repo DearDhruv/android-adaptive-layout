@@ -7,6 +7,7 @@ package com.deardhruv.adaptivelayout.presentation.home
  *  Copyright ©2025 DearDhruv. All rights reserved.
  */
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,11 +36,14 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.deardhruv.adaptivelayout.presentation.components.TopBarTitle
 import com.deardhruv.adaptivelayout.presentation.components.alPinnedScrollBehavior
+import com.deardhruv.adaptivelayout.ui.preview.ConfusingTraversalOrder
+import com.deardhruv.adaptivelayout.ui.preview.LogicalTraversalOrder
 import com.deardhruv.adaptivelayout.util.WindowInfo
 
 /**
@@ -115,7 +119,20 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(280.dp))
 
+            // Tests()
         }
+    }
+}
+
+@Composable
+private fun Tests() {
+    Column {
+        ConfusingTraversalOrder()
+        Spacer(Modifier
+            .height(1.dp)
+            .fillMaxWidth()
+            .background(Color.Black))
+        LogicalTraversalOrder()
     }
 }
 
