@@ -10,17 +10,12 @@ package com.deardhruv.adaptivelayout.presentation.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -34,7 +29,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.deardhruv.adaptivelayout.presentation.components.AdaptiveProductListDetailLayout
 import com.deardhruv.adaptivelayout.presentation.custom.CustomAdaptiveLayoutScreen
 import com.deardhruv.adaptivelayout.presentation.home.HomeScreen
@@ -107,55 +101,55 @@ fun AdaptiveNavigationScaffold(
         paddingValues
         Row(modifier = Modifier.fillMaxSize()) {
             //if (showNavigationRail) {
-                NavigationSuiteScaffold(
-                    navigationSuiteItems = {
-                        AppDestination.entries.forEach {
-                            item(
-                                selected = navigationState.currentDestination == it,
-                                onClick = {
-                                    navigationState = navigationState.copy(
-                                        currentDestination = it
-                                    )
-                                },
-                                label = { Text(it.label) },
-                                icon = {
-                                    Icon(
-                                        imageVector = it.icon,
-                                        contentDescription = it.contentDescription
-                                    )
-                                },
-                                alwaysShowLabel = true,
+            NavigationSuiteScaffold(
+                navigationSuiteItems = {
+                    AppDestination.entries.forEach {
+                        item(
+                            selected = navigationState.currentDestination == it,
+                            onClick = {
+                                navigationState = navigationState.copy(
+                                    currentDestination = it
+                                )
+                            },
+                            label = { Text(it.label) },
+                            icon = {
+                                Icon(
+                                    imageVector = it.icon,
+                                    contentDescription = it.contentDescription
+                                )
+                            },
+                            alwaysShowLabel = true,
+                        )
+                    }
+                },
+                layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true))
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    when (navigationState.currentDestination) {
+                        AppDestination.HOME -> {
+                            HomeScreen(windowInfo = windowInfo)
+                        }
+
+                        AppDestination.PRODUCTS -> {
+                            AdaptiveProductListDetailLayout(
+                                viewModel = productViewModel
                             )
                         }
-                    },
-                    layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true))
-                ){
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        when (navigationState.currentDestination) {
-                            AppDestination.HOME -> {
-                                HomeScreen(windowInfo = windowInfo)
-                            }
 
-                            AppDestination.PRODUCTS -> {
-                                AdaptiveProductListDetailLayout(
-                                    viewModel = productViewModel
-                                )
-                            }
+                        AppDestination.SETTINGS -> {
+                            SettingsScreen(windowInfo = windowInfo)
+                        }
 
-                            AppDestination.SETTINGS -> {
-                                SettingsScreen(windowInfo = windowInfo)
-                            }
-
-                            AppDestination.CUSTOM -> {
-                                // Show the custom adaptive layout screen here
-                                CustomAdaptiveLayoutScreen(windowInfo = windowInfo)
-                            }
+                        AppDestination.CUSTOM -> {
+                            // Show the custom adaptive layout screen here
+                            CustomAdaptiveLayoutScreen(windowInfo = windowInfo)
                         }
                     }
                 }
+            }
             // }
 
             // if (showNavigationRail) {

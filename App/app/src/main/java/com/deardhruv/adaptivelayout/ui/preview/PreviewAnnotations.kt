@@ -18,12 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
     name = "Phone - Portrait",
     device = "spec:width=411dp,height=891dp,dpi=420",
     showBackground = true,
-    backgroundColor = 0x81248114
+    backgroundColor = 0xFCE7A2
 )
 @Preview(
     name = "Phone - Landscape",
     device = "spec:width=891dp,height=411dp,dpi=420",
-    showBackground = true
+    showBackground = true,
+    backgroundColor = 0xFCE7A2
 )
 annotation class PhonePreviews
 
@@ -33,12 +34,14 @@ annotation class PhonePreviews
 @Preview(
     name = "Tablet - Portrait",
     device = "spec:width=800dp,height=1280dp,dpi=240",
-    showBackground = true
+    showBackground = true,
+    backgroundColor = 0xFCE7A2
 )
 @Preview(
     name = "Tablet - Landscape",
     device = "spec:width=1280dp,height=800dp,dpi=240",
-    showBackground = true
+    showBackground = true,
+    backgroundColor = 0xFCE7A2
 )
 annotation class TabletPreviews
 

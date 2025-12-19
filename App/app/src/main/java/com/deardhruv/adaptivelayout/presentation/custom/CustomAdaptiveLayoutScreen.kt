@@ -57,6 +57,10 @@ fun CustomAdaptiveLayoutScreen(
                 .verticalScroll(scrollState)
                 .padding(paddingValues)
         ) {
+            Spacer(
+                modifier = Modifier
+                    .height(16.dp)
+            )
             // Informational section describing adaptive layouts
             Text(
                 text = "Adaptive Layouts: Are Your Apps Ready?",
