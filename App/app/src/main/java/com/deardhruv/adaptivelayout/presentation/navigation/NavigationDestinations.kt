@@ -14,15 +14,18 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
 
 /**
  * Navigation destinations for the app
  */
+@Serializable
 enum class AppDestination(
     val icon: ImageVector,
     val label: String,
     val contentDescription: String
-) {
+) : NavKey {
     HOME(
         icon = Icons.Default.Home,
         label = "Home",
