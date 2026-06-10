@@ -89,8 +89,7 @@ fun ProductDetailPane(
         Column(
             modifier = modifier
                 .fillMaxSize()
-//                .padding(paddingValues) // Use the entire paddingValues
-                .padding(top = paddingValues.calculateTopPadding())
+                .padding(paddingValues) // includes top-bar + FAB bottom clearance
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -193,7 +192,6 @@ fun ProductDetailPane(
                 DetailRow(label = "Category", value = product.category)
                 DetailRow(label = "Rating", value = "${product.rating} / 5.0")
                 DetailRow(label = "Availability", value = if (product.isAvailable) "In Stock" else "Out of Stock")
-                Spacer(modifier = Modifier.height(100.dp))
             }
         }
     }

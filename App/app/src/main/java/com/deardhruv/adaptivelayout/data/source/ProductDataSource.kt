@@ -7,20 +7,34 @@ package com.deardhruv.adaptivelayout.data.source
  *  Copyright ©2025 DearDhruv. All rights reserved.
  */
 
-import android.util.Log
 import com.deardhruv.adaptivelayout.data.model.Product
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
- * Data source for products
- * In a real app, this would be an API service or database
+ * Data source for products.
+ * Products are generated once and cached in memory to avoid redundant object creation.
  */
 class ProductDataSource {
 
-    suspend fun getProducts(): List<Product> {
-        // Simulate network delay
-        // delay(500)
+    private val mutex = Mutex()
 
+    /** In-memory product cache. Populated lazily on the first [getProducts] call. */
+    private var cachedProducts: List<Product>? = null
+
+    suspend fun getProducts(): List<Product> = mutex.withLock {
+        cachedProducts ?: buildProductList().also { cachedProducts = it }
+    }
+
+    suspend fun getProductById(productId: String): Product? {
+        return getProducts().find { it.id == productId }
+    }
+
+    // ---------------------------------------------------------------------------
+    // Private helpers
+    // ---------------------------------------------------------------------------
+
+    private fun buildProductList(): List<Product> {
         val uniqueDescriptions = listOf(
             "Experience next-gen performance with this cutting-edge device. Engineered for speed and reliability, it boasts a sleek, ergonomic design and a vibrant display that brings your content to life. Perfect for professionals and creatives alike.",
             "Wrap yourself in unparalleled comfort with this premium fabric garment. Made from 100% organic cotton, it's breathable, durable, and incredibly soft to the touch. A timeless addition to any wardrobe, designed for all-day wear.",
@@ -46,21 +60,11 @@ class ProductDataSource {
                 description = uniqueDescriptions[index % uniqueDescriptions.size] +
                         " This item #${index + 1} showcases adaptive layout capabilities and features high-quality materials.",
                 price = (index + 1) * 10.99,
-                imageUrl = "https://picsum.photos/seed/${index+30}/400/300",
-                // imageUrl = "https://via.placeholder.com/400x300.png/282828/FFFFFF?text=Product+${index + 1}",
-                // imageUrl = "https://loremflickr.com/400/300/${listOf("electronics", "apparel", "home", "books", "sports")[index % 5]}?lock=$index",
-                // imageUrl = "https://placehold.co/600x400?text=Product%0A${index + 1}",
+                imageUrl = "https://picsum.photos/seed/${index + 30}/400/300",
                 category = listOf("Electronics", "Clothing", "Home", "Books", "Sports")[index % 5],
                 rating = 3.5f + (index % 3) * 0.5f,
                 inStock = index % 7 != 0
-            ).also {
-                Log.d("imageUrl", it.imageUrl)
-            }
+            )
         }
-    }
-
-    suspend fun getProductById(productId: String): Product? {
-        //delay(300)
-        return getProducts().find { it.id == productId }
     }
 }

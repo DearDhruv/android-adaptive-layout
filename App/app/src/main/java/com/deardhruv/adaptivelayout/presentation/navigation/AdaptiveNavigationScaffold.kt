@@ -8,21 +8,13 @@ package com.deardhruv.adaptivelayout.presentation.navigation
  */
 
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffoldDefaults
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,145 +31,56 @@ import com.deardhruv.adaptivelayout.util.WindowInfo
 
 
 /**
- * Adaptive navigation scaffold that changes navigation UI based on screen size
- * - Compact: Bottom Navigation
- * - Medium: Navigation Rail
- * - Expanded: Navigation Rail (or Drawer)
+ * Adaptive navigation scaffold that automatically selects the correct navigation UI:
+ * - Compact: Bottom Navigation Bar
+ * - Medium:  Navigation Rail
+ * - Expanded: Navigation Drawer
+ *
+ * Uses [NavigationSuiteScaffold] which handles all form factors natively.
  */
-
-
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun AdaptiveNavigationScaffold(
-    postureType: DevicePostureType,
+    @Suppress("UNUSED_PARAMETER") postureType: DevicePostureType, // reserved for foldable-specific layouts
     windowInfo: WindowInfo,
     productViewModel: ProductViewModel,
     modifier: Modifier = Modifier,
 ) {
-
-    when (postureType) {
-        DevicePostureType.TABLETOP,
-        DevicePostureType.BOOK,
-        DevicePostureType.NORMAL -> {
-
-        }
-    }
     var navigationState by rememberSaveable(stateSaver = NavigationState.Saver) {
         mutableStateOf(NavigationState())
     }
 
-    val showNavigationRail =
-        windowInfo.widthSizeClass == WindowWidthSizeClass.Medium || windowInfo.widthSizeClass == WindowWidthSizeClass.Expanded
-    val showBottomBar = windowInfo.widthSizeClass == WindowWidthSizeClass.Compact
-
-    Scaffold(
-        bottomBar = {
-            if (showBottomBar) {
-                NavigationBar(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                ) {
-                    AppDestination.entries.forEach { destination ->
-                        NavigationBarItem(
-                            icon = {
-                                Icon(
-                                    imageVector = destination.icon,
-                                    contentDescription = destination.contentDescription
-                                )
-                            },
-                            label = { Text(destination.label) },
-                            selected = navigationState.currentDestination == destination,
-                            onClick = {
-                                navigationState = navigationState.copy(
-                                    currentDestination = destination
-                                )
-                            }
+    NavigationSuiteScaffold(
+        navigationSuiteItems = {
+            AppDestination.entries.forEach { destination ->
+                item(
+                    selected = navigationState.currentDestination == destination,
+                    onClick = {
+                        navigationState = navigationState.copy(
+                            currentDestination = destination
                         )
-                    }
-                }
+                    },
+                    label = { Text(destination.label) },
+                    icon = {
+                        Icon(
+                            imageVector = destination.icon,
+                            contentDescription = destination.contentDescription
+                        )
+                    },
+                    alwaysShowLabel = true,
+                )
             }
         },
-        modifier = modifier
-    ) { paddingValues ->
-        paddingValues
-        Row(modifier = Modifier.fillMaxSize()) {
-            //if (showNavigationRail) {
-            NavigationSuiteScaffold(
-                navigationSuiteItems = {
-                    AppDestination.entries.forEach {
-                        item(
-                            selected = navigationState.currentDestination == it,
-                            onClick = {
-                                navigationState = navigationState.copy(
-                                    currentDestination = it
-                                )
-                            },
-                            label = { Text(it.label) },
-                            icon = {
-                                Icon(
-                                    imageVector = it.icon,
-                                    contentDescription = it.contentDescription
-                                )
-                            },
-                            alwaysShowLabel = true,
-                        )
-                    }
-                },
-                layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true))
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    when (navigationState.currentDestination) {
-                        AppDestination.HOME -> {
-                            HomeScreen(windowInfo = windowInfo)
-                        }
-
-                        AppDestination.PRODUCTS -> {
-                            AdaptiveProductListDetailLayout(
-                                viewModel = productViewModel
-                            )
-                        }
-
-                        AppDestination.SETTINGS -> {
-                            SettingsScreen(windowInfo = windowInfo)
-                        }
-
-                        AppDestination.CUSTOM -> {
-                            // Show the custom adaptive layout screen here
-                            CustomAdaptiveLayoutScreen(windowInfo = windowInfo)
-                        }
-                    }
-                }
-            }
-            // }
-
-            // if (showNavigationRail) {
-            //     NavigationRail(
-            //         containerColor = MaterialTheme.colorScheme.surfaceContainer
-            //     ) {
-            //         Spacer(modifier = Modifier.height(24.dp))
-            //         AppDestination.entries.forEach { destination ->
-            //             NavigationRailItem(
-            //                 icon = {
-            //                     Icon(
-            //                         imageVector = destination.icon,
-            //                         contentDescription = destination.contentDescription
-            //                     )
-            //                 },
-            //                 label = { Text(destination.label) },
-            //                 selected = navigationState.currentDestination == destination,
-            //                 onClick = {
-            //                     navigationState = navigationState.copy(
-            //                         currentDestination = destination
-            //                     )
-            //                 }
-            //             )
-            //         }
-            //     }
-            // }
-
-
+        layoutType = NavigationSuiteScaffoldDefaults.calculateFromAdaptiveInfo(
+            currentWindowAdaptiveInfo(supportLargeAndXLargeWidth = true)
+        ),
+        modifier = modifier,
+    ) {
+        when (navigationState.currentDestination) {
+            AppDestination.HOME -> HomeScreen(windowInfo = windowInfo)
+            AppDestination.PRODUCTS -> AdaptiveProductListDetailLayout(viewModel = productViewModel)
+            AppDestination.SETTINGS -> SettingsScreen(windowInfo = windowInfo)
+            AppDestination.CUSTOM -> CustomAdaptiveLayoutScreen(windowInfo = windowInfo)
         }
     }
 }

@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.deardhruv.adaptivelayout.presentation.components.TopBarTitle
 import com.deardhruv.adaptivelayout.presentation.components.alPinnedScrollBehavior
 import com.deardhruv.adaptivelayout.presentation.widgets.AdaptiveButtonsEnd
 import com.deardhruv.adaptivelayout.presentation.widgets.MoreButtonTextEnd
@@ -47,6 +48,14 @@ fun CustomAdaptiveLayoutScreen(
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopBarTitle(
+                scrollBehavior = scrollBehavior,
+                title = "Custom Layouts",
+                isCenterContent = false,
+                showBack = false,
+            )
+        },
     ) { paddingValues ->
 
         val scrollState = rememberScrollState()

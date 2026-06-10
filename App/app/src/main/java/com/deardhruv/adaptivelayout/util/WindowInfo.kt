@@ -9,6 +9,7 @@ package com.deardhruv.adaptivelayout.util
 
 
 import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.Posture
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -19,15 +20,14 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 
 /**
- * Contains up-to-date window size and posture information using latest APIs.
+ * Contains up-to-date window size and posture information.
  */
 data class WindowInfo @OptIn(ExperimentalMaterial3AdaptiveApi::class) constructor(
     val windowSizeClass: WindowSizeClass,
-    val windowPosture: Posture,          // Use Posture if foldables/tablets supported
+    val windowPosture: Posture,
     val screenWidthDp: Dp,
     val screenHeightDp: Dp
 ) {
@@ -43,12 +43,12 @@ data class WindowInfo @OptIn(ExperimentalMaterial3AdaptiveApi::class) constructo
 }
 
 /**
- * Helper to get up-to-date WindowInfo inside your composables
+ * Helper to get up-to-date [WindowInfo] inside your composables.
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun rememberWindowInfo(posture: State<Posture>): WindowInfo {
-    val activity = LocalContext.current as Activity
+    val activity = LocalActivity.current as Activity
     val configuration = LocalConfiguration.current
     val windowSizeClass = calculateWindowSizeClass(activity)
 

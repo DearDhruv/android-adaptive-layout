@@ -8,10 +8,7 @@ package com.deardhruv.adaptivelayout.presentation.products
  */
 
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +21,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,10 +35,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import com.deardhruv.adaptivelayout.domain.model.ProductDomain
 import com.deardhruv.adaptivelayout.presentation.components.TopBarTitle
 import com.deardhruv.adaptivelayout.presentation.components.alPinnedScrollBehavior
@@ -58,7 +57,7 @@ fun ProductListPane(
     val scrollBehavior = TopAppBarDefaults.alPinnedScrollBehavior()
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             TopBarTitle(
                 scrollBehavior = scrollBehavior,
@@ -68,26 +67,21 @@ fun ProductListPane(
             )
         }
     ) { paddingValues ->
-        Column(
-            modifier = modifier
+        LazyColumn(
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(top = paddingValues.calculateTopPadding()),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            LazyColumn(
-                modifier = modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(products, key = { it.id }) { product ->
-                    ProductListItem(
-                        product = product,
-                        onClick = { onProductClick(product.id) }
-                    )
-                }
-                item {
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
+            items(products, key = { it.id }) { product ->
+                ProductListItem(
+                    product = product,
+                    onClick = { onProductClick(product.id) }
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
@@ -103,9 +97,10 @@ fun ProductListItem(
     modifier: Modifier = Modifier
 ) {
     Card(
+        onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
+            .semantics { contentDescription = "View details for ${product.name}" },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -115,16 +110,11 @@ fun ProductListItem(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             // Product Image
-            Image(
-                painter = rememberAsyncImagePainter(product.imageUrl),
-                contentDescription = product.description,
-                modifier = Modifier
-                    .size(80.dp),
+            AsyncImage(
+                model = product.imageUrl,
+                contentDescription = null, // decorative; product name is in the card semantics
+                modifier = Modifier.size(80.dp),
                 contentScale = ContentScale.Crop
-
-                // .semantics {
-                //     contentDescription = contentDescription
-                // }
             )
 
             // Product Info

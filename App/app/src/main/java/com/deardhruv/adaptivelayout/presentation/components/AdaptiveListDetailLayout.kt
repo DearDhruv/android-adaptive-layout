@@ -5,8 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -98,34 +102,37 @@ fun AdaptiveProductListDetailLayout(
                 // Check if list pane is visible (correct way)
                 val isListVisible = navigator.scaffoldValue[ListDetailPaneScaffoldRole.List] == PaneAdaptedValue.Expanded
 
-                // Load product when detail pane is opened
+                // Load product when a new product ID is navigated to
                 LaunchedEffect(selectedProductId) {
                     selectedProductId?.let { productId ->
                         viewModel.loadProductById(productId)
                     }
                 }
 
-                when (selectedProductState) {
-                    is ProductDetailUiState.Loading -> {
-                        LoadingScreen()
-                    }
+                // When no product is selected yet, show the empty/placeholder state
+                if (selectedProductId == null) {
+                    NoSelectionPane()
+                } else {
+                    when (selectedProductState) {
+                        is ProductDetailUiState.Loading -> {
+                            LoadingScreen()
+                        }
 
-                    is ProductDetailUiState.Success -> {
-                        val product = (selectedProductState as ProductDetailUiState.Success).product
-                        ProductDetailPane(
-                            product = product,
-                            onBackClick = { scope.launch { navigator.navigateBack() } },
-                            isListVisible = isListVisible
-                        )
-                    }
+                        is ProductDetailUiState.Success -> {
+                            val product = (selectedProductState as ProductDetailUiState.Success).product
+                            ProductDetailPane(
+                                product = product,
+                                onBackClick = { scope.launch { navigator.navigateBack() } },
+                                isListVisible = isListVisible
+                            )
+                        }
 
-                    is ProductDetailUiState.Error -> {
-                        ErrorScreen(
-                            message = (selectedProductState as ProductDetailUiState.Error).message,
-                            onRetry = {
-                                selectedProductId?.let { viewModel.loadProductById(it) }
-                            }
-                        )
+                        is ProductDetailUiState.Error -> {
+                            ErrorScreen(
+                                message = (selectedProductState as ProductDetailUiState.Error).message,
+                                onRetry = { viewModel.loadProductById(selectedProductId) }
+                            )
+                        }
                     }
                 }
             }
@@ -175,3 +182,32 @@ private fun ErrorScreen(
         }
     }
 }
+
+/**
+ * Shown in the detail pane when no item has been selected yet.
+ */
+@Composable
+private fun NoSelectionPane(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ShoppingCart,
+                contentDescription = null,
+                modifier = Modifier.size(64.dp),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+            )
+            Text(
+                text = "Select a product to view details",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
